@@ -5,12 +5,12 @@ import { useMutation, useQuery } from '@apollo/client';
 import { ADD_NODE, GET_NODES } from '../../gql';
 
 import AddNodeModal from './add-node-modal'
-import NodesFieldDrawer from './node-fields-drawer';
+import NodesFieldDrawer from './add-fields-drawer';
 import Nodes from './nodes'
 import './index.css';
 
 const AdminPanel = () => {
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [addNode, { loading: loadingAddNode, error: errorAddNode }] = useMutation(ADD_NODE);
   const { loading: loadingNodes, error: errorNodes, data: dataNodes = {} } = useQuery(GET_NODES);
@@ -23,7 +23,7 @@ const AdminPanel = () => {
 
   const handleAddNode = async (variables) => {
     const { data: { addNode: newNode } } = await addNode({ variables });
-    setOpen(false);
+    setOpenModal(false);
     setAllNodes((prevNodes) => [newNode, ...prevNodes])
   }
 
@@ -31,11 +31,11 @@ const AdminPanel = () => {
 
   return (
     <main>
-      <AddNodeModal handleAddNode={handleAddNode} handleCancel={() => setOpen(false)} error={errorAddNode} loading={loadingAddNode} open={open} />
+      <AddNodeModal error={errorAddNode} loading={loadingAddNode} open={openModal} handleAddNode={handleAddNode} handleCancel={() => setOpenModal(false)} />
 
       <section className='admin-header'>
         <h1>Admin Panel</h1>
-        <Button type="primary" onClick={() => setOpen(!open)} >+ Add Node Type</Button>
+        <Button type="primary" onClick={() => setOpenModal(true)} >+ Add Node Type</Button>
       </section>
 
       <Divider />
