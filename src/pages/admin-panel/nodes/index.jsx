@@ -3,7 +3,7 @@ import { bool, shape, arrayOf, string } from 'prop-types';
 
 import './index.css';
 
-const Nodes = ({ loading, error, nodes }) => {
+const Nodes = ({ loading, error, nodes, handleNodeClick }) => {
 
   if (loading) return <h2>Loading Nodes List...</h2>;
 
@@ -16,7 +16,7 @@ const Nodes = ({ loading, error, nodes }) => {
       {nodes.length ? nodes.map((node) => {
         return (
           <div key={node._id}>
-            <Button>{node.displayName}</Button>
+            <Button onClick={() =>handleNodeClick(node) }>{node.displayName}</Button>
           </div>
         )
       }): <div>No Node Found</div>}
@@ -34,7 +34,8 @@ Nodes.propTypes = {
     name: string,
     displayName: string,
     _id: string
-  }))
+  })),
+  handleNodeClick() {}
 }
 
 Nodes.defaultProps = {
