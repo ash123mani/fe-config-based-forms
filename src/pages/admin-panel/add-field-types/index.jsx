@@ -6,7 +6,7 @@ const FieldTypes = ({ onFieldSelect }) => {
     <Space size={16}>
       {fieldTypes.map((field) => {
         return (
-          <Card hoverable title={field.title} size="small" key={field.element} style={{ width: '240px' }} onClick={() => onFieldSelect(field)}>
+          <Card hoverable title={field.title} size="small" key={field.elementType} style={{ width: '240px' }} onClick={() => onFieldSelect(field)}>
             <p>{field.description}</p>
           </Card>
         )

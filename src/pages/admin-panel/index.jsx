@@ -52,7 +52,7 @@ const AdminPanel = () => {
             <Watermark content={['No Field Present', selectedNode.displayName]}>
               <div style={{ height: 200 }} />
             </Watermark>
-            <NodesFieldDrawer open={openDrawer} handleClose={() => setOpenDrawer(false)} />
+            <NodesFieldDrawer open={openDrawer} handleClose={() => setOpenDrawer(false)} selectedNode={selectedNode} />
           </div>}
         </div>
       </section>

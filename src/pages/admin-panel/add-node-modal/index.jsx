@@ -6,15 +6,15 @@ import { toCamelCase } from '../../../utils'
 
 const AddNodeModal = ({ handleAddNode, handleCancel, error, loading, open }) => {
   const [name, setName] = useState('');
-  const [displayName, setDisplayName] = useState(name);
+  const [apiIdentifier, setApiIdentifier] = useState();
 
   useEffect(() => {
-    setName(toCamelCase(displayName))
-  }, [displayName])
+    setApiIdentifier(toCamelCase(name))
+  }, [name])
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleAddNode({ name, displayName })
+    handleAddNode({ name, apiIdentifier })
   }
 
   return (
@@ -22,7 +22,7 @@ const AddNodeModal = ({ handleAddNode, handleCancel, error, loading, open }) => 
       title="Create new node type"
       centered
       open={open}
-      onOk={() => handleAddNode({ name, displayName })}
+      onOk={() => handleAddNode({ name, apiIdentifier })}
       onCancel={handleCancel}
       width={1000}
       okText="Submit"
@@ -31,14 +31,14 @@ const AddNodeModal = ({ handleAddNode, handleCancel, error, loading, open }) => 
       {error && <Alert message={`Submission error! ${error.message}`} type="error" style={{ marginBottom: '20px' }} closable />}
 
       <form onSubmit={handleSubmit}>
-        <Input placeholder="Name" size='large' onChange={(e) => setDisplayName(e.target.value)} />
+        <Input placeholder="Name" size='large' onChange={(e) => setName(e.target.value)} />
         <br />
         <br />
         <Input
           placeholder="Api Identifier"
           size='large'
-          onChange={(e) => setDisplayName(e.target.value)}
-          value={name}
+          onChange={(e) => setApiIdentifier(e.target.value)}
+          value={apiIdentifier}
         />
       </form>
     </Modal>

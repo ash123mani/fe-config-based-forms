@@ -14,9 +14,10 @@ const Nodes = ({ loading, error, nodes, handleNodeClick }) => {
       <h2>Node List</h2>
       <div className='node-list'>
       {nodes.length ? nodes.map((node) => {
+        console.log('node', node)
         return (
           <div key={node._id}>
-            <Button onClick={() =>handleNodeClick(node) }>{node.displayName}</Button>
+            <Button onClick={() =>handleNodeClick(node) }>{node.name}</Button>
           </div>
         )
       }): <div>No Node Found</div>}

@@ -1,11 +1,11 @@
 export const fieldTypes = [
   {
-    element: "Text",
+    elementType: "Text",
     title: "Text",
     description: "Use for strings"
   },
   {
-    element: "Integer",
+    elementType: "Integer",
     title: "Integer",
     description: "Use for numbers"
   }

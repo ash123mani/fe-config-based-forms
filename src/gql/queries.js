@@ -4,7 +4,7 @@ export const GET_NODES = gql`
   query GetNodes {
     nodes {
       name
-      displayName
+      apiIdentifier
       _id
     }
   }
