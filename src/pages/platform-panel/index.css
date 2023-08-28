@@ -14,9 +14,15 @@
 }
 
 .nodes-flow-section {
-  width: 40%;
+  width: 400px;
+  position: relative;
+  display: flex;
 }
 
 .form-section {
   flex: 1;
+}
+
+.dnd-area {
+  display: flex;
 }

@@ -1,37 +1,28 @@
-import Draggable from "react-draggable";
-import { string } from 'prop-types'
+import { string, number } from 'prop-types'
+import { Draggable } from 'react-beautiful-dnd';
 
 import ConnectPointsWrapper from '../connections-wrapper';
+import './index.css';
 
-const boxStyle = {
-  border: "1px solid #E0E0E0",
-  position: "relative",
-  padding: "12px",
-  height: 'fit-content',
-  borderRadius: '4px'
-};
 
-const Box = ({ text, handler, addArrow, setArrows, boxId, onClick }) => {
+const Box = ({ text, handler, setArrows, boxId, onClick, index }) => {
   return (
-    <Draggable onDrag={() => setArrows((arrows) => [...arrows])} bounds="parent">
-      <div
-        onClick={onClick}
-        id={boxId}
-        style={boxStyle}
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => {
-          if (e.dataTransfer.getData("arrow") === boxId) {
-            console.log(e.dataTransfer.getData("arrow"), boxId);
-          } else {
-            const refs = { start: e.dataTransfer.getData("arrow"), end: boxId };
-            addArrow(refs);
-            console.log("droped!", refs);
-          }
-        }}
-      >
-        {text}
-        <ConnectPointsWrapper {...{ boxId, handler }} />
-      </div>
+    <Draggable draggableId={boxId} onDrag={() => setArrows((arrows) => [...arrows])} index={index}>
+      {(provided) => {
+        return (
+          <div
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+            onClick={onClick}
+            className='dnd-node'
+          >
+            {text}
+            <ConnectPointsWrapper {...{ boxId, handler }} />
+          </div>
+        )
+      }}
+
     </Draggable>
   );
 };
@@ -39,10 +30,11 @@ const Box = ({ text, handler, addArrow, setArrows, boxId, onClick }) => {
 Box.propTypes = {
   text: string.isRequired,
   handler: string.isRequired,
-  addArrow() {},
-  setArrows() {},
+  addArrow() { },
+  setArrows() { },
   boxId: string.isRequired,
-  onClick() {}
+  onClick() { },
+  index: number.isRequired
 }
 
 Box.defaultProps = {

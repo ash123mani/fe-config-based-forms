@@ -1,20 +1,80 @@
 import { useQuery, useLazyQuery } from '@apollo/client';
-// import { useState } from 'react';
 import { Divider } from 'antd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+
 
 import NodesFlow from './nodes-flow';
 import Elements from './elements'
 import { GET_NODES, GET_NODE_FIELDS } from '../../gql';
 import './index.css';
+import { useState, useEffect } from 'react';
 
 const PlatformPanel = () => {
-  const { data: dataNodes = {} } = useQuery(GET_NODES);
-  const [getNodeFields, { data: dataNodeFields = {} }] = useLazyQuery(GET_NODE_FIELDS);
-  // const [currentForm, setCurrentForm] = useState({});
-  // const [flowConfig, setFlowConfig] = useState({});
+  const { data: dataNodes = {}, loading: loadingNodes } = useQuery(GET_NODES);
+  const [getNodeFields, { data: dataNodeFields = {}, loading: loadingNodeField }] = useLazyQuery(GET_NODE_FIELDS);
+
+  const [testNodes, setTestNodes] = useState({
+    'all-nodes': [],
+    'map-nodes': []
+  });
+
+
+  useEffect(() => {
+    setTestNodes((prevNodes) => {
+      return {
+        ...prevNodes,
+        'all-nodes': dataNodes?.nodes || []
+      }
+    })
+  }, [dataNodes])
 
   const handleNodeClick = async (node) => {
-     await getNodeFields({ variables: { nodeId: node._id }})
+    await getNodeFields({ variables: { nodeId: node._id } })
+  }
+
+  const handleDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) return
+
+    if (destination.draggableId === source.draggableId && destination.index === source.index) return;
+
+    if (source.droppableId === destination.droppableId) {
+      let sourceNodes = testNodes[source.droppableId] || [];
+
+      const newSourceNodes = Array.from(sourceNodes);
+
+      const filterdNode = newSourceNodes.filter((n) => n.apiIdentifier === draggableId)[0];
+
+      newSourceNodes.splice(source.index, 1);
+      newSourceNodes.splice(destination.index, 0, filterdNode)
+
+      setTestNodes(prevNodes => {
+        return {
+          ...prevNodes,
+          [source.droppableId]: newSourceNodes
+        }
+      })
+    } else {
+      let sourceNodes = testNodes[source.droppableId] || [];
+      let destNodes = testNodes[destination.droppableId] || [];
+
+      const newSourceNodes = Array.from(sourceNodes);
+      const newDestNodes = Array.from(destNodes);
+
+      const filterdNode = sourceNodes.filter((n) => n.apiIdentifier === draggableId)[0];
+
+      newSourceNodes.splice(source.index, 1);
+      newDestNodes.splice(destination.index, 0, filterdNode)
+
+      setTestNodes(prevNodes => {
+        return {
+          ...prevNodes,
+          [source.droppableId]: newSourceNodes,
+          [destination.droppableId]: newDestNodes
+        }
+      })
+    }
   }
 
   return (
@@ -24,12 +84,51 @@ const PlatformPanel = () => {
       <Divider />
 
       <div className='platform-sections'>
-        <div className='nodes-flow-section'>
-          <NodesFlow nodes={dataNodes.nodes} onClick={handleNodeClick}/>
-        </div>
-        <Divider type="vertical" style={{ height: '100%' }}/>
-        <div className='form-section'>
-          <Elements fields={dataNodeFields?.nodeFields} />
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <div className='nodes-flow-section'>
+            {loadingNodes
+                ? <strong>Loading Nodes...</strong> :
+                <Droppable droppableId='all-nodes'>
+                  {(provided) => {
+                    return (
+                      <div ref={provided.innerRef} {...provided.droppableProps}>
+                        <NodesFlow nodes={testNodes['all-nodes']} onClick={handleNodeClick} />
+                        {provided.placeholder}
+                      </div>
+                    )
+                  }}
+                </Droppable>
+            }
+
+            <Divider type="vertical" style={{ height: '100%' }} />
+
+            <Droppable droppableId='map-nodes'>
+              {(provided) => {
+                return (
+                  <div className='dnd-area'>
+                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                      <h3>Drag Nodes here to map</h3>
+                      <NodesFlow nodes={testNodes['map-nodes']} onClick={handleNodeClick} />
+                      {provided.placeholder}
+                    </div>
+                  </div>
+                )
+              }}
+            </Droppable>
+          </div>
+        </DragDropContext>
+
+        <Divider type="vertical" style={{ height: '100%' }} />
+
+        <div className='form-section' id="forms-section">
+          <h3>Form</h3>
+          {loadingNodeField
+            ? <strong>Loading Fields...</strong>
+            : dataNodeFields?.nodeFields?.length
+              ? <Elements fields={dataNodeFields?.nodeFields} />
+              : <strong>No config found</strong>
+          }
+
         </div>
       </div>
     </div>

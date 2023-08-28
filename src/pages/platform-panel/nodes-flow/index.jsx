@@ -14,18 +14,20 @@ export default function NodesFlow({ nodes, onClick }) {
     setArrows([...arrows, { start, end }]);
   };
 
-  if(!nodes.length) return null;
+  if (!nodes.length) return <h3>No Node Found</h3>;
 
   return (
     <div className='nodes-list'>
-      {nodes.map((node) => {
+      <h3>Nodes</h3>
+      {nodes.map((node, index) => {
         return (
           <Box
-          key={node._id}
-          text={node.name}
-          onClick={() => onClick(node)}
-          {...{ addArrow, setArrows, handler: "bottom", boxId: node.apiIdentifier }}
-        />
+            key={node._id}
+            text={node.name}
+            onClick={() => onClick(node)}
+            index={index}
+            {...{ addArrow, setArrows, handler: "bottom", boxId: node.apiIdentifier }}
+          />
         )
       })}
       {arrows.map((ar) => (
@@ -45,7 +47,7 @@ NodesFlow.propTypes = {
     apiIdentifier: string,
     _id: string
   })),
-  onClick() {}
+  onClick() { }
 }
 
 NodesFlow.defaultProps = {
