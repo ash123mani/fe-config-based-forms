@@ -20,10 +20,11 @@
 ###### Add Node Config ( images order as per flow )
 <img width="1512" alt="Screenshot 2023-08-28 at 3 56 24 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/01c75f51-0536-447b-91a5-3051b134b4cb">
 
+<img width="1512" alt="Screenshot 2023-08-28 at 3 56 32 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/2a90b7f1-5f11-457e-9671-f30fccb018e1">
+
 <img width="1512" alt="Screenshot 2023-08-28 at 3 57 14 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/581778ac-e146-4755-bdba-390c86f7da95">
 
 
-<img width="1512" alt="Screenshot 2023-08-28 at 3 56 32 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/2a90b7f1-5f11-457e-9671-f30fccb018e1">
 
 
 
