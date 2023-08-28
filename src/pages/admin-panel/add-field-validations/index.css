@@ -1,0 +1,9 @@
+.validations-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.validations {
+  flex: 1;
+}

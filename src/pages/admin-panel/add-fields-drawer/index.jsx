@@ -5,10 +5,13 @@ import { useMutation } from '@apollo/client';
 
 import FieldTypes from "../add-field-types";
 import AddFieldName from '../add-field-name';
-import { ADD_FIELD } from '../../../gql';
+import AddFieldValidations from '../add-field-validations';
+import { ADD_FIELD, UPDATE_FIELD } from '../../../gql';
 
 const NodesFieldDrwaer = ({ handleClose, open, selectedNode }) => {
-  const [addNodeField, { loading: loadingAddField, error: errorAddField }] = useMutation(ADD_FIELD);
+  const [addNodeField, { loading: loadingAddField }] = useMutation(ADD_FIELD);
+  const [updateNodeField] = useMutation(UPDATE_FIELD);
+  const [fieldId, setFieldId] = useState(null);
 
   const [screen, setScreen] = useState('add-field-basic');
   const [form, setForm] = useState({})
@@ -27,22 +30,15 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode }) => {
   const handleAddField = async (basicInfo) => {
     if (!basicInfo.name || !basicInfo.apiIdentifier) return
 
-    const variables = { ...form, basicInfo };
-    console.log('variables', variables)
     updateForm({ key: 'basicInfo', value: basicInfo });
-    await addNodeField({ variables });
-    if (!errorAddField) {
-      setScreen('validations')
-    }
-  }
 
-  const renderScreen = () => {
-    if (screen === 'add-field-basic') {
-      if (!form.elementType) return <FieldTypes onFieldSelect={handleFieldSelect} />
-      return <AddFieldName onChangeFieldTypeClick={handleChangeFieldTypeClick} onAddField={handleAddField} loading={loadingAddField} />
-    }
-    if (screen === 'validations') {
-      return <h1>Validations</h1>
+    const variables = { ...form, basicInfo };
+    const { data: { addNodeField: newField } } = await addNodeField({ variables });
+    console.log('newField', newField)
+
+    if (newField) {
+      setScreen('validations')
+      setFieldId(newField._id);
     }
   }
 
@@ -51,8 +47,45 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode }) => {
     handleFieldSelect({})
   }
 
+  const updateNode = async (variables) => {
+    const vars = { _id: fieldId, ...variables }
+    await updateNodeField({ variables: vars })
+  }
+
+  const handleValidationsSubmit = async (validations) => {
+    updateForm({ key: 'validations', value: validations })
+    await updateNode({ validations })
+    handleClose()
+  }
+
+  const renderScreen = () => {
+    if (screen === 'add-field-basic') {
+      
+      if (!form.elementType) return <FieldTypes onFieldSelect={handleFieldSelect} />
+
+      return <AddFieldName onChangeFieldTypeClick={handleChangeFieldTypeClick} onAddField={handleAddField} loading={loadingAddField} />
+    }
+
+    if (screen === 'validations') {
+      return <AddFieldValidations onConfirm={handleValidationsSubmit}/>
+    }
+  }
+
+  const getTitle = () => {
+    if (screen === 'add-field-basic') {
+      
+      if (!form.elementType) return `Add Element Type for ${selectedNode.name}`
+
+      return `Add Name for ${selectedNode.name}`
+    }
+
+    if (screen === 'validations') {
+      return `Add Validations for ${selectedNode.name}`
+    }
+  }
+
   return (
-    <Drawer title="Add Field" placement="right" onClose={handleDrawerClose} open={open} size="large">
+    <Drawer title={getTitle()} placement="right" onClose={handleDrawerClose} open={open} size="large">
       {renderScreen()}
   </Drawer>
   )

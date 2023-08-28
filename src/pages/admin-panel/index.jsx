@@ -46,10 +46,10 @@ const AdminPanel = () => {
         <div>
           {!selectedNode ? <h3>Select node to see types for it</h3> : <div>
             <div className='select-node-header'>
-              <h2>Fields for {selectedNode.displayName}</h2>
-              <Button type="primary" onClick={() => setOpenDrawer(true)}>+ Add Field to {selectedNode.displayName}</Button>
+              <h2>Fields for {selectedNode.name}</h2>
+              <Button type="primary" onClick={() => setOpenDrawer(true)}>+ Add Field to {selectedNode.name}</Button>
             </div>
-            <Watermark content={['No Field Present', selectedNode.displayName]}>
+            <Watermark content={['No Field Present', selectedNode.name]}>
               <div style={{ height: 200 }} />
             </Watermark>
             <NodesFieldDrawer open={openDrawer} handleClose={() => setOpenDrawer(false)} selectedNode={selectedNode} />
