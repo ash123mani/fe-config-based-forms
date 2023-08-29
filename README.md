@@ -12,7 +12,9 @@
 # ScreenShots
 
  ###### Admin Panel
-<img width="1512" alt="Screenshot 2023-08-29 at 4 19 12 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/8cd51ab4-db4a-4a97-94fa-331b2eb09b0d">
+<img width="1512" alt="Screenshot 2023-08-29 at 4 19 12 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/707ad583-89cb-4cb5-86c1-7c8010fb4856">
+
+<img width="1504" alt="Screenshot 2023-08-25 at 2 17 41 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/d5855651-028d-4023-a453-8ba2c200ecdd">
 
 ###### Add Node Modal
 <img width="1508" alt="Screenshot 2023-08-25 at 2 04 44 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/d2db6f1a-74b5-422c-8224-0abe298995c5">
