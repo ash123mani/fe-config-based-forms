@@ -1,13 +1,12 @@
+import { useState, useEffect } from 'react';
 import { useQuery, useLazyQuery } from '@apollo/client';
-import { Divider } from 'antd';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { Divider } from 'antd';
 
-
+import { GET_NODES, GET_NODE_FIELDS } from '../../gql';
 import NodesFlow from './nodes-flow';
 import Elements from './elements'
-import { GET_NODES, GET_NODE_FIELDS } from '../../gql';
 import './index.css';
-import { useState, useEffect } from 'react';
 
 const PlatformPanel = () => {
   const { data: dataNodes = {}, loading: loadingNodes } = useQuery(GET_NODES);
@@ -127,10 +126,6 @@ const PlatformPanel = () => {
                       <h3>Drag Nodes here to map</h3>
                       <NodesFlow nodes={testNodes['map-nodes']} onClick={handleNodeClick} newArrows={arrows} isDraggingOver={snap.isDraggingOver}/>
                       {provided.placeholder}
-                      {provided.placeholder}
-                      {provided.placeholder}
-                      {provided.placeholder}
-
                     </div>
                   </div>
                 )

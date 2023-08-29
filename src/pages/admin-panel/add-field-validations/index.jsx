@@ -1,27 +1,38 @@
-import { useState } from "react"
-import { Button, Checkbox } from "antd";
+import { useState } from 'react';
+import { Button, Checkbox } from 'antd';
+import { bool, object } from 'prop-types';
 
-import './index.css'
+import './index.css';
 
-const AddFieldValidations = ({ onConfirm }) => {
+const AddFieldValidations = ({ onConfirm, config }) => {
   const [required, setRequired] = useState(false);
 
   const handleConfirm = () => {
-    onConfirm({ required })
-  }
+    onConfirm({ required });
+  };
 
   return (
     <form onSubmit={handleConfirm} className="validations-form">
       <div className="validations">
-        <Checkbox onChange={e => setRequired(e.target.checked)}>Required</Checkbox>
+        <Checkbox onChange={(e) => setRequired(e.target.checked)} checked={required || config.required}>
+          Required
+        </Checkbox>
       </div>
-      <Button type="primary" onClick={handleConfirm}>Confirm</Button>
+      <Button type="primary" onClick={handleConfirm}>
+        Confirm
+      </Button>
     </form>
-  )
-}
+  );
+};
 
 AddFieldValidations.propTypes = {
-  onConfirm() {}
-}
+  onConfirm() {},
+  isEditing: bool,
+  config: object
+};
 
-export default AddFieldValidations
+AddFieldValidations.defaultProps = {
+  isEditing: false,
+  config: {}
+};
+export default AddFieldValidations;
