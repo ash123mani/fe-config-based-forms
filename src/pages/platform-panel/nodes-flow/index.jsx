@@ -1,18 +1,11 @@
-import { useState } from 'react';
 import { arrayOf, shape, string } from 'prop-types';
 import Xarrow from "react-xarrows";
 
 import Box from '../draggable-box';
 import './index.css'
 
-export default function NodesFlow({ nodes, onClick }) {
-  const [arrows, setArrows] = useState([]);
+export default function NodesFlow({ nodes, onClick, newArrows }) {
 
-  console.log("arrows", arrows);
-
-  const addArrow = ({ start, end }) => {
-    setArrows([...arrows, { start, end }]);
-  };
 
   if (!nodes.length) return <h3>No Node Found</h3>;
 
@@ -26,15 +19,16 @@ export default function NodesFlow({ nodes, onClick }) {
             text={node.name}
             onClick={() => onClick(node)}
             index={index}
-            {...{ addArrow, setArrows, handler: "bottom", boxId: node.apiIdentifier }}
+            boxId={node.apiIdentifier}
           />
         )
       })}
-      {arrows.map((ar) => (
+      {!!newArrows?.length && newArrows.map((ar) => (
         <Xarrow
           start={ar.start}
           end={ar.end}
           key={ar.start + "-." + ar.start}
+          curveness='1'
         />
       ))}
     </div>
@@ -47,9 +41,15 @@ NodesFlow.propTypes = {
     apiIdentifier: string,
     _id: string
   })),
-  onClick() { }
+  onClick() { },
+  newArrows: arrayOf(shape({
+    name: string,
+    apiIdentifier: string,
+    _id: string
+  })),
 }
 
 NodesFlow.defaultProps = {
-  nodes: []
+  nodes: [],
+  newArrows: []
 }

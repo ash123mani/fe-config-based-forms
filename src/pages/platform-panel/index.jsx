@@ -17,6 +17,22 @@ const PlatformPanel = () => {
     'all-nodes': [],
     'map-nodes': []
   });
+  const [arrows, setArrows] = useState([])
+
+  useEffect(() => {
+    const newArrows = []
+    for (let i=0; i<testNodes['map-nodes'].length; i++) {
+      if (i !== testNodes['map-nodes'].length - 1) {
+        newArrows.push({
+          start: testNodes['map-nodes'][i].apiIdentifier,
+          end: testNodes['map-nodes'][i + 1].apiIdentifier
+        })
+      } 
+
+      console.log('newArrows', newArrows)
+      setArrows(newArrows)
+    }
+  }, [testNodes])
 
 
   useEffect(() => {
@@ -108,7 +124,7 @@ const PlatformPanel = () => {
                   <div className='dnd-area'>
                     <div ref={provided.innerRef} {...provided.droppableProps}>
                       <h3>Drag Nodes here to map</h3>
-                      <NodesFlow nodes={testNodes['map-nodes']} onClick={handleNodeClick} />
+                      <NodesFlow nodes={testNodes['map-nodes']} onClick={handleNodeClick} newArrows={arrows} />
                       {provided.placeholder}
                     </div>
                   </div>

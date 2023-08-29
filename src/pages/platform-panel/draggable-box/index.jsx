@@ -1,14 +1,14 @@
 import { string, number } from 'prop-types'
 import { Draggable } from 'react-beautiful-dnd';
 
-import ConnectPointsWrapper from '../connections-wrapper';
 import './index.css';
 
 
-const Box = ({ text, handler, setArrows, boxId, onClick, index }) => {
+const Box = ({ text, boxId, onClick, index }) => {
   return (
-    <Draggable draggableId={boxId} onDrag={() => setArrows((arrows) => [...arrows])} index={index}>
+    <Draggable draggableId={boxId} index={index}>
       {(provided) => {
+        console.log('provided.draggableProps', provided)
         return (
           <div
             {...provided.draggableProps}
@@ -16,9 +16,9 @@ const Box = ({ text, handler, setArrows, boxId, onClick, index }) => {
             ref={provided.innerRef}
             onClick={onClick}
             className='dnd-node'
+            id={boxId}
           >
             {text}
-            <ConnectPointsWrapper {...{ boxId, handler }} />
           </div>
         )
       }}
@@ -29,16 +29,9 @@ const Box = ({ text, handler, setArrows, boxId, onClick, index }) => {
 
 Box.propTypes = {
   text: string.isRequired,
-  handler: string.isRequired,
-  addArrow() { },
-  setArrows() { },
   boxId: string.isRequired,
   onClick() { },
   index: number.isRequired
-}
-
-Box.defaultProps = {
-  handler: 'bottom'
 }
 
 export default Box
