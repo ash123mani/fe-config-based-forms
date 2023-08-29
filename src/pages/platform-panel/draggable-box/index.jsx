@@ -7,8 +7,8 @@ import './index.css';
 const Box = ({ text, boxId, onClick, index }) => {
   return (
     <Draggable draggableId={boxId} index={index}>
-      {(provided) => {
-        console.log('provided.draggableProps', provided)
+      {(provided, snapshot) => {
+        console.log('provided.draggableProps', snapshot)
         return (
           <div
             {...provided.draggableProps}

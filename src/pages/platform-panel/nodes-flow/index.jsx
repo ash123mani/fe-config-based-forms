@@ -1,10 +1,10 @@
-import { arrayOf, shape, string } from 'prop-types';
+import { arrayOf, shape, string, bool } from 'prop-types';
 import Xarrow from "react-xarrows";
 
 import Box from '../draggable-box';
 import './index.css'
 
-export default function NodesFlow({ nodes, onClick, newArrows }) {
+export default function NodesFlow({ nodes, onClick, newArrows, isDraggingOver }) {
 
 
   if (!nodes.length) return <h3>No Node Found</h3>;
@@ -23,7 +23,7 @@ export default function NodesFlow({ nodes, onClick, newArrows }) {
           />
         )
       })}
-      {!!newArrows?.length && newArrows.map((ar) => (
+      {!isDraggingOver && !!newArrows?.length && newArrows.map((ar) => (
         <Xarrow
           start={ar.start}
           end={ar.end}
@@ -47,9 +47,11 @@ NodesFlow.propTypes = {
     apiIdentifier: string,
     _id: string
   })),
+  isDraggingOver: bool
 }
 
 NodesFlow.defaultProps = {
   nodes: [],
-  newArrows: []
+  newArrows: [],
+  isDraggingOver: false
 }

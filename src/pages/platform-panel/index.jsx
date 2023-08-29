@@ -119,13 +119,18 @@ const PlatformPanel = () => {
             <Divider type="vertical" style={{ height: '100%' }} />
 
             <Droppable droppableId='map-nodes'>
-              {(provided) => {
+              {(provided,snap) => {
+                console.log('snapsnapsnap', snap)
                 return (
                   <div className='dnd-area'>
                     <div ref={provided.innerRef} {...provided.droppableProps}>
                       <h3>Drag Nodes here to map</h3>
-                      <NodesFlow nodes={testNodes['map-nodes']} onClick={handleNodeClick} newArrows={arrows} />
+                      <NodesFlow nodes={testNodes['map-nodes']} onClick={handleNodeClick} newArrows={arrows} isDraggingOver={snap.isDraggingOver}/>
                       {provided.placeholder}
+                      {provided.placeholder}
+                      {provided.placeholder}
+                      {provided.placeholder}
+
                     </div>
                   </div>
                 )
