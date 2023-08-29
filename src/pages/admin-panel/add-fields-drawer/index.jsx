@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Drawer } from 'antd';
 import { bool, shape, string, object } from 'prop-types';
 import { useMutation } from '@apollo/client';
+import omit from 'lodash/omit';
 
 import FieldTypes from '../add-field-types';
 import AddFieldName from '../add-field-name';
@@ -17,19 +18,21 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode, isEditing, editNode
   const [screen, setScreen] = useState(screens.INFO);
   const [form, setForm] = useState({});
 
+  const updateForm = ({ key, value }) => setForm((prevForm) => ({ ...prevForm, [key]: value }));
+
   useEffect(() => updateForm({ key: 'nodeId', value: selectedNode._id }), [selectedNode]);
+
+  useEffect(() => setFieldId(editNodeConfig._id), [editNodeConfig]);
 
   useEffect(() => {
     setScreen(isEditing ? screens.INFO : screens.TYPES);
-    setForm(isEditing ? editNodeConfig : {});
-  }, [isEditing]);
+    setForm(isEditing ? omit(editNodeConfig, ['__typename', 'elementType', '_id']) : {});
+  }, [isEditing, editNodeConfig]);
 
   const handleFieldSelect = ({ elementType }) => {
     updateForm({ key: 'elementType', value: elementType || '' });
     setScreen(screens.INFO);
   };
-
-  const updateForm = ({ key, value }) => setForm((prevForm) => ({ ...prevForm, [key]: value }));
 
   const handleChangeFieldTypeClick = () => {
     setScreen(screens.TYPES);
@@ -41,7 +44,7 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode, isEditing, editNode
 
     updateForm({ key: 'basicInfo', value: basicInfo });
 
-    const variables = { ...form, basicInfo };
+    const variables = { ...form, basicInfo, nodeId: selectedNode._id };
     const {
       data: { addNodeField: newField }
     } = await addNodeField({ variables });
@@ -63,7 +66,8 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode, isEditing, editNode
   };
 
   const handleValidationsSubmit = async (validations) => {
-    updateForm({ key: 'validations', value: validations });
+    updateForm({ key: 'validations', value: validations.required });
+    updateForm({ key: 'validations', errorMsg: validations.errorMsg });
     await updateNode({ validations });
     handleClose();
   };
@@ -92,14 +96,17 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode, isEditing, editNode
   };
 
   const getTitle = () => {
+    const name = editNodeConfig?.basicInfo?.name;
     if (screen === screens.INFO) {
-      if (!form.elementType) return `Add Element Type for ${selectedNode.name}`;
+      return `Add Name for ${selectedNode.name} ${name ? `[${name}]` : ''}`;
+    }
 
-      return `Add Name for ${selectedNode.name}`;
+    if (screen === screens.TYPES) {
+      return `Add Element Type for ${selectedNode.name} ${name ? `[${name}]` : ''}`;
     }
 
     if (screen === screens.VALIDATIONS) {
-      return `Add Validations for ${selectedNode.name}`;
+      return `Add Validations for ${selectedNode.name} ${name ? `[${name}]` : ''}`;
     }
   };
 

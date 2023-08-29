@@ -1,45 +1,70 @@
 import { array } from 'prop-types';
-import { Input, InputNumber, Button, Space } from 'antd'
+import { Input, InputNumber, Button, Space, Form } from 'antd';
 
 const Elements = ({ fields }) => {
-  console.log('fields', fields)
+  if (!fields.length) return null;
 
+  const handleSubmit = (e) => {
+    e.target.preventDefault();
+  };
 
-  if (!fields.length) return null
+  const onFinish = (values) => {
+    console.log('Success:', values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
 
   const renderType = (field) => {
-    const { elementType, basicInfo } = field;
+    const { elementType, basicInfo, validations } = field;
+    const reqRule = {
+      required: validations.required,
+      message: validations.errorMsg
+    };
 
-    if (elementType === "Text") {
-       return <Input placeholder={basicInfo.name} size="large" />
+    if (elementType === 'Text') {
+      return (
+        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={[reqRule]}>
+          <Input placeholder={basicInfo.name} size="large" />
+        </Form.Item>
+      );
     }
 
-    if (elementType === "Integer") {
-      return <InputNumber placeholder={basicInfo.name} size="large" />
-   }
-  }
-  
+    if (elementType === 'Integer') {
+      return (
+        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={[reqRule]}>
+          <InputNumber placeholder={basicInfo.name} size="large" />
+        </Form.Item>
+      );
+    }
+  };
 
   return (
-    <form>
+    <Form onSubmit={handleSubmit} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
       {fields.map((field) => {
-        return <div key={field._id} style={{ margin: "12px 0" }}>{renderType(field)}</div>
+        return (
+          <div key={field._id} style={{ margin: '12px 0' }}>
+            {renderType(field)}
+          </div>
+        );
       })}
-      <Space wrap align='end'>
-      <Button type='primary'>Submit</Button>
-      <Button>Cancel</Button>
+      <Space wrap align="end">
+        <Button type="primary" onClick={handleSubmit} htmlType="submit">
+          Submit
+        </Button>
+        <Button>Cancel</Button>
       </Space>
-
-    </form>
-  )
-}
+    </Form>
+  );
+};
 
 Elements.propTypes = {
   fields: array
-}
+};
 
 Elements.defaultProps = {
   fields: []
-}
+};
 
-export default Elements
+export default Elements;

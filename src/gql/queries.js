@@ -8,21 +8,22 @@ export const GET_NODES = gql`
       _id
     }
   }
-`
+`;
 
 export const GET_NODE_FIELDS = gql`
-  query($nodeId: ID!) {
-   nodeFields(nodeId: $nodeId) {
-    _id
-    nodeId
-    elementType
-    basicInfo {
-      name
-      apiIdentifier
-    }
-    validations {
-      required
+  query ($nodeId: ID!) {
+    nodeFields(nodeId: $nodeId) {
+      _id
+      nodeId
+      elementType
+      basicInfo {
+        name
+        apiIdentifier
+      }
+      validations {
+        required
+        errorMsg
+      }
     }
   }
-}
-`
+`;

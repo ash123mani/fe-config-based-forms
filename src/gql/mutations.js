@@ -11,32 +11,33 @@ export const ADD_NODE = gql`
 `;
 
 export const ADD_FIELD = gql`
- mutation($nodeId: ID!, $elementType: String!, $basicInfo: BasicInfoInput) {
-  addNodeField(nodeId: $nodeId, elementType: $elementType, basicInfo: $basicInfo) {
-    _id
-    nodeId
-    elementType
-    basicInfo {
-      name
-      apiIdentifier
+  mutation ($nodeId: ID!, $elementType: String!, $basicInfo: BasicInfoInput) {
+    addNodeField(nodeId: $nodeId, elementType: $elementType, basicInfo: $basicInfo) {
+      _id
+      nodeId
+      elementType
+      basicInfo {
+        name
+        apiIdentifier
+      }
     }
   }
-}
-`
+`;
 
 export const UPDATE_FIELD = gql`
-  mutation($_id: ID!, $basicInfo: BasicInfoInput, $validations: ValidationsInput) {
-  updateNodeField(_id: $_id, basicInfo: $basicInfo, validations: $validations) {
-    _id
-    nodeId
-    elementType
-    basicInfo {
-      name
-      apiIdentifier
-    }
-    validations {
-      required
+  mutation ($_id: ID!, $basicInfo: BasicInfoInput, $validations: ValidationsInput) {
+    updateNodeField(_id: $_id, basicInfo: $basicInfo, validations: $validations) {
+      _id
+      nodeId
+      elementType
+      basicInfo {
+        name
+        apiIdentifier
+      }
+      validations {
+        required
+        errorMsg
+      }
     }
   }
-}
-`
+`;
