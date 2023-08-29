@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useLazyQuery } from '@apollo/client';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Divider } from 'antd';
+import { Divider, Space, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 import { GET_NODES, GET_NODE_FIELDS } from '../../gql';
 import NodesFlow from './nodes-flow';
@@ -93,7 +94,19 @@ const PlatformPanel = () => {
 
   return (
     <div className="platform-panel">
-      <h2>PlatformPanel</h2>
+      <Space size="large">
+        <Button type="dashed">
+          <strong>Platform Panel</strong>
+        </Button>
+
+        <Link to="/admin">
+          <Button type="lik">Admin</Button>
+        </Link>
+
+        <Link to="/">
+          <Button type="lik">Home</Button>
+        </Link>
+      </Space>
 
       <Divider />
 

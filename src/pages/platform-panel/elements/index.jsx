@@ -4,10 +4,6 @@ import { Input, InputNumber, Button, Space, Form } from 'antd';
 const Elements = ({ fields }) => {
   if (!fields.length) return null;
 
-  const handleSubmit = (e) => {
-    e.target.preventDefault();
-  };
-
   const onFinish = (values) => {
     console.log('Success:', values);
   };
@@ -41,7 +37,7 @@ const Elements = ({ fields }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+    <Form layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
       {fields.map((field) => {
         return (
           <div key={field._id} style={{ margin: '12px 0' }}>
@@ -50,7 +46,7 @@ const Elements = ({ fields }) => {
         );
       })}
       <Space wrap align="end">
-        <Button type="primary" onClick={handleSubmit} htmlType="submit">
+        <Button type="primary" htmlType="submit">
           Submit
         </Button>
         <Button>Cancel</Button>

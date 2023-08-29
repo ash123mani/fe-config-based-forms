@@ -1,9 +1,19 @@
+import { Link } from 'react-router-dom';
+import { Space, Button } from 'antd';
+
 const Home = () => {
   return (
-    <div>
-      <h1>Home Page</h1>
+    <div className="home">
+      <Space>
+        <Link to="/admin">
+          <Button type="link">Admin</Button>
+        </Link>
+        <Link to="/platform">
+          <Button type="lik">Platform</Button>
+        </Link>
+      </Space>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

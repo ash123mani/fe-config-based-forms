@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Button, Divider } from 'antd';
+import { Button, Divider, Space } from 'antd';
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
+import { Link } from 'react-router-dom';
 
 import { ADD_NODE, GET_NODES, GET_NODE_FIELDS } from '../../gql';
 
@@ -32,6 +33,7 @@ const AdminPanel = () => {
     setOpenModal(false);
     setAllNodes((prevNodes) => [newNode, ...prevNodes]);
     setIsEditing(false);
+    return;
   };
 
   const handleNodeClick = async (node) => {
@@ -57,7 +59,17 @@ const AdminPanel = () => {
       />
 
       <section className="admin-header">
-        <h1>Admin Panel</h1>
+        <Space size="large">
+          <Button type="dashed">
+            <strong>Admin Panel</strong>
+          </Button>
+          <Link to="/platform">
+            <Button type="lik">Platform</Button>
+          </Link>
+          <Link to="/">
+            <Button type="lik">Home</Button>
+          </Link>
+        </Space>
         <Button type="primary" onClick={() => setOpenModal(true)}>
           + Add Node Type
         </Button>

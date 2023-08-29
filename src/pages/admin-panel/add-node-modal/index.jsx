@@ -2,20 +2,22 @@ import { useState, useEffect } from 'react';
 import { string, shape, bool } from 'prop-types';
 import { Modal, Input, Alert } from 'antd';
 
-import { toCamelCase } from '../../../utils'
+import { toCamelCase } from '../../../utils';
 
 const AddNodeModal = ({ handleAddNode, handleCancel, error, loading, open }) => {
   const [name, setName] = useState('');
   const [apiIdentifier, setApiIdentifier] = useState();
 
   useEffect(() => {
-    setApiIdentifier(toCamelCase(name))
-  }, [name])
+    setApiIdentifier(toCamelCase(name));
+  }, [name]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleAddNode({ name, apiIdentifier })
-  }
+    await handleAddNode({ name, apiIdentifier });
+    setName('');
+    setApiIdentifier('');
+  };
 
   return (
     <Modal
@@ -28,31 +30,33 @@ const AddNodeModal = ({ handleAddNode, handleCancel, error, loading, open }) => 
       okText="Submit"
       confirmLoading={loading}
     >
-      {error && <Alert message={`Submission error! ${error.message}`} type="error" style={{ marginBottom: '20px' }} closable />}
+      {error && (
+        <Alert message={`Submission error! ${error.message}`} type="error" style={{ marginBottom: '20px' }} closable />
+      )}
 
       <form onSubmit={handleSubmit}>
-        <Input placeholder="Name" size='large' onChange={(e) => setName(e.target.value)} />
+        <Input placeholder="Name" size="large" onChange={(e) => setName(e.target.value)} />
         <br />
         <br />
         <Input
           placeholder="Api Identifier"
-          size='large'
+          size="large"
           onChange={(e) => setApiIdentifier(e.target.value)}
           value={apiIdentifier}
         />
       </form>
     </Modal>
-  )
-}
+  );
+};
 
 AddNodeModal.propTypes = {
-  handleAddNode: () => { },
-  handleCancel: () => { },
+  handleAddNode: () => {},
+  handleCancel: () => {},
   error: shape({
     message: string
   }),
   loading: bool,
   open: bool
-}
+};
 
 export default AddNodeModal;
