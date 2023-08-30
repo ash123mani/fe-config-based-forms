@@ -19,6 +19,7 @@ export const GET_NODE_FIELDS = gql`
       basicInfo {
         name
         apiIdentifier
+        dataFields
       }
       validations {
         required

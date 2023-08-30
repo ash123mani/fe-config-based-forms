@@ -14,7 +14,7 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode, isEditing, editNode
   const [addNodeField, { loading: loadingAddField }] = useMutation(ADD_FIELD);
   const [updateNodeField] = useMutation(UPDATE_FIELD);
   const [fieldId, setFieldId] = useState(null);
-
+  
   const [screen, setScreen] = useState(screens.INFO);
   const [form, setForm] = useState({});
 

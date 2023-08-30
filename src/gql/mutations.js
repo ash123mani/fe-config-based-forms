@@ -19,6 +19,7 @@ export const ADD_FIELD = gql`
       basicInfo {
         name
         apiIdentifier
+        dataFields
       }
     }
   }
@@ -33,6 +34,7 @@ export const UPDATE_FIELD = gql`
       basicInfo {
         name
         apiIdentifier
+        dataFields
       }
       validations {
         required

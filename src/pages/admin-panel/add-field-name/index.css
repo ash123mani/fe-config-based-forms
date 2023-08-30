@@ -1,6 +1,18 @@
 .add-field-name {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   height: 100%;
+}
+
+.add-field-inputs {
+  flex: 1;
+}
+
+.add-fields-basic-info {
+  margin-bottom: 20px;
+}
+
+.field-name-buttons {
+  align-self: flex-end;
 }
