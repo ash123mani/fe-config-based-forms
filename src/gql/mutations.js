@@ -37,6 +37,12 @@ export const UPDATE_FIELD = gql`
       validations {
         required
         errorMsg
+        pattern {
+          value
+          pattern
+          flags
+          errorMsg
+        }
       }
     }
   }

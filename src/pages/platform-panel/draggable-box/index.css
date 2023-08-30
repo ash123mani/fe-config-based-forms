@@ -1,7 +1,7 @@
 .dnd-node {
   width: fit-content;
-  height: 20px;
-  border: 1px solid #E0E0E0;
+  /* height: 20px; */
+  border: 1px solid #e0e0e0;
   padding: 8px 12px;
   border-radius: 4px;
   background-color: white;

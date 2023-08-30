@@ -23,6 +23,12 @@ export const GET_NODE_FIELDS = gql`
       validations {
         required
         errorMsg
+        pattern {
+          value
+          pattern
+          flags
+          errorMsg
+        }
       }
     }
   }

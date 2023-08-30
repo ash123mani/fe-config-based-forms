@@ -68,6 +68,7 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode, isEditing, editNode
   const handleValidationsSubmit = async (validations) => {
     updateForm({ key: 'validations', value: validations.required });
     updateForm({ key: 'validations', errorMsg: validations.errorMsg });
+    updateForm({ key: 'validations', pattern: validations.pattern });
     await updateNode({ validations });
     handleClose();
   };
