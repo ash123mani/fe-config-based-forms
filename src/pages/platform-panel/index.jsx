@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useLazyQuery } from '@apollo/client';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Divider, Space, Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Divider } from 'antd';
+import Header from './header';
 
 import { GET_NODES, GET_NODE_FIELDS } from '../../gql';
 import NodesFlow from './nodes-flow';
 import Elements from './elements';
+import ConfigDrawer from './config-drawer';
 import './index.css';
 
 const PlatformPanel = () => {
   const { data: dataNodes = {}, loading: loadingNodes } = useQuery(GET_NODES);
   const [getNodeFields, { data: dataNodeFields = {}, loading: loadingNodeField }] = useLazyQuery(GET_NODE_FIELDS);
+  const [showConfigDrawer, setShowConfigDrawer] = useState(false);
 
   const [testNodes, setTestNodes] = useState({
     'all-nodes': [],
@@ -92,22 +94,11 @@ const PlatformPanel = () => {
 
   return (
     <div className="platform-panel">
-      <Space size="large">
-        <Button type="dashed">
-          <strong>Platform Panel</strong>
-        </Button>
+      <Header onConfigClick={() => setShowConfigDrawer(true)} />
 
-        <Link to="/admin">
-          <Button type="lik">Admin</Button>
-        </Link>
-
-        <Link to="/">
-          <Button type="lik">Home</Button>
-        </Link>
-      </Space>
+      <ConfigDrawer onDrawerClose={() => setShowConfigDrawer(false)} open={showConfigDrawer} nodes={dataNodeFields} />
 
       <Divider />
-
       <div className="platform-sections">
         <DragDropContext onDragEnd={handleDragEnd}>
           <div className="nodes-flow-section">
