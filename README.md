@@ -29,3 +29,7 @@
 
 <img width="1508" alt="Screenshot 2023-09-01 at 1 35 27 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/4ef74371-c009-4170-aa5b-91c88badd426">
 
+##### Config Drawer
+
+<img width="1512" alt="Screenshot 2023-09-01 at 9 32 37 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/5ce0dbc1-ba43-491c-a710-53f1259296ee">
+
