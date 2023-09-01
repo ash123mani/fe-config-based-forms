@@ -134,12 +134,13 @@ const PlatformPanel = () => {
                 return (
                   <div className="dnd-area">
                     <div ref={provided.innerRef} {...provided.droppableProps}>
-                      <h3>Drag Nodes here to map</h3>
+                      <h3 className="map-nodes__title">Drag Nodes here to map</h3>
                       <NodesFlow
                         nodes={testNodes['map-nodes']}
                         onClick={handleNodeClick}
                         newArrows={arrows}
                         isDraggingOver={snap.isDraggingOver}
+                        isFlow
                       />
                       {provided.placeholder}
                     </div>

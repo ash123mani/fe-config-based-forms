@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
 import { string, shape, bool } from 'prop-types';
 import { Modal, Input, Alert } from 'antd';
-
-import { toCamelCase } from '../../../utils';
+import camelCase from 'lodash/camelCase';
 
 const AddNodeModal = ({ handleAddNode, handleCancel, error, loading, open }) => {
   const [name, setName] = useState('');
   const [apiIdentifier, setApiIdentifier] = useState();
 
   useEffect(() => {
-    setApiIdentifier(toCamelCase(name));
+    setApiIdentifier(camelCase(name));
   }, [name]);
 
   const handleSubmit = async (e) => {

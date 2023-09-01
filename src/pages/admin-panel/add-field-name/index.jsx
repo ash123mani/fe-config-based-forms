@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Input, Button, Space } from 'antd';
 import { bool, object, string } from 'prop-types';
+import camelCase from 'lodash/camelCase';
 
 import SelectInputs from './select-inputs';
-import { toCamelCase } from '../../../utils';
-
 import './index.css';
 
 const AddFieldName = ({
@@ -30,7 +29,7 @@ const AddFieldName = ({
   };
 
   useEffect(() => {
-    setApiIdentifier(toCamelCase(name));
+    setApiIdentifier(camelCase(name));
   }, [name]);
 
   const handleAddItem = (value) => {

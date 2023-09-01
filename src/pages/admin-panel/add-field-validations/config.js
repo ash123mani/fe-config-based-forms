@@ -1,8 +1,11 @@
+/* eslint-disable no-useless-escape */
 export const patterns = {
   text: [
-    // { value: '', label: 'Custom' },
-    { label: 'E-mail', value: '^w[w.-]*@([w-]+.)+[w-]+$' },
-    { label: 'URL', value: '^(ftp|http|https)://(w+:{0,1}w*@)?(S+)(:[0-9]+)?(/|/([w#!:.?+=&%@!-/]))?$' }
+    { label: 'E-mails', value: '^[w-.]+@([w-]+.)+[w-]{2,4}$' },
+    {
+      label: 'URL',
+      value: '^https?://(?:www.)?[-a-zA-Z0-9@:%._+~#=]{1,256}.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$'
+    }
   ],
   number: {}
 };

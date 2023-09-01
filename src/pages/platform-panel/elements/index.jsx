@@ -22,12 +22,10 @@ const Elements = ({ fields }) => {
 
     const patternRule = pattern.value
       ? {
-          pattern: pattern?.pattern && new RegExp(pattern?.pattern),
+          pattern: pattern?.pattern && `/${pattern.pattern}/`,
           message: pattern?.errorMsg
         }
       : {};
-
-    console.log('patternRule', patternRule);
 
     if (elementType === 'Text') {
       return (

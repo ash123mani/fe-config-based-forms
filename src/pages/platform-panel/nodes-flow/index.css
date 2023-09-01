@@ -1,8 +1,9 @@
 .nodes-list {
   display: flex;
-  /* flex-direction: row; */
   gap: 20px;
   flex-direction: column;
-  /* position: relative; */
-  /* height: 100%; */
+}
+
+.flows-list {
+  gap: 40px;
 }
