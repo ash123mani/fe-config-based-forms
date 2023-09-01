@@ -20,12 +20,7 @@ const Patterns = ({ onChange, onPatternChange, pattern, onErrorChange, config })
         )}
       </Space>
       {pattern.value && (
-        <Input
-          placeholder="Error Message"
-          size="large"
-          value={pattern.errorMsg || config?.pattern?.errorMsg}
-          onChange={onErrorChange}
-        />
+        <Input placeholder="Error Message" size="large" value={pattern.errorMsg} onChange={onErrorChange} />
       )}
     </Space>
   );

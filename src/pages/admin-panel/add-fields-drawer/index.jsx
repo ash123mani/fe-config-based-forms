@@ -14,7 +14,7 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode, isEditing, editNode
   const [addNodeField, { loading: loadingAddField }] = useMutation(ADD_FIELD);
   const [updateNodeField] = useMutation(UPDATE_FIELD);
   const [fieldId, setFieldId] = useState(null);
-  
+
   const [screen, setScreen] = useState(screens.INFO);
   const [form, setForm] = useState({});
 
@@ -26,7 +26,7 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode, isEditing, editNode
 
   useEffect(() => {
     setScreen(isEditing ? screens.INFO : screens.TYPES);
-    setForm(isEditing ? omit(editNodeConfig, ['__typename', 'elementType', '_id']) : {});
+    setForm(isEditing ? omit(editNodeConfig, ['__typename', '_id']) : {});
   }, [isEditing, editNodeConfig]);
 
   const handleFieldSelect = ({ elementType }) => {
@@ -40,18 +40,26 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode, isEditing, editNode
   };
 
   const handleAddField = async (basicInfo) => {
+    console.log('basicInfo', basicInfo);
     if (!basicInfo.name || !basicInfo.apiIdentifier) return;
 
     updateForm({ key: 'basicInfo', value: basicInfo });
 
     const variables = { ...form, basicInfo, nodeId: selectedNode._id };
-    const {
-      data: { addNodeField: newField }
-    } = await addNodeField({ variables });
 
-    if (newField) {
+    if (!isEditing) {
+      const {
+        data: { addNodeField: newField }
+      } = await addNodeField({ variables });
+
+      if (newField) {
+        setScreen(screens.VALIDATIONS);
+        setFieldId(newField._id);
+      }
+    } else {
+      const variables = { ...form, basicInfo };
+      await updateNode(omit(variables, 'validations'));
       setScreen(screens.VALIDATIONS);
-      setFieldId(newField._id);
     }
   };
 
@@ -83,6 +91,7 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode, isEditing, editNode
           isEditing={isEditing}
           config={editNodeConfig?.basicInfo}
           onEditValidations={() => setScreen(screens.VALIDATIONS)}
+          elementType={form?.elementType}
         />
       );
     }
@@ -92,7 +101,13 @@ const NodesFieldDrwaer = ({ handleClose, open, selectedNode, isEditing, editNode
     }
 
     if (screen === screens.VALIDATIONS) {
-      return <AddFieldValidations onConfirm={handleValidationsSubmit} config={editNodeConfig?.validations} />;
+      return (
+        <AddFieldValidations
+          onConfirm={handleValidationsSubmit}
+          config={editNodeConfig?.validations}
+          elementType={form?.elementType}
+        />
+      );
     }
   };
 

@@ -1,5 +1,5 @@
 import { array } from 'prop-types';
-import { Input, InputNumber, Button, Space, Form } from 'antd';
+import { Input, InputNumber, Button, Space, Form, Select } from 'antd';
 
 const Elements = ({ fields }) => {
   if (!fields.length) return null;
@@ -14,14 +14,24 @@ const Elements = ({ fields }) => {
 
   const renderType = (field) => {
     const { elementType, basicInfo, validations } = field;
+    const { pattern = {} } = validations;
     const reqRule = {
       required: validations.required,
       message: validations.errorMsg
     };
 
+    const patternRule = pattern.value
+      ? {
+          pattern: pattern?.pattern && new RegExp(pattern?.pattern),
+          message: pattern?.errorMsg
+        }
+      : {};
+
+    console.log('patternRule', patternRule);
+
     if (elementType === 'Text') {
       return (
-        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={[reqRule]}>
+        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={[reqRule, patternRule]}>
           <Input placeholder={basicInfo.name} size="large" />
         </Form.Item>
       );
@@ -29,8 +39,23 @@ const Elements = ({ fields }) => {
 
     if (elementType === 'Integer') {
       return (
-        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={[reqRule]}>
+        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={[reqRule, patternRule]}>
           <InputNumber placeholder={basicInfo.name} size="large" />
+        </Form.Item>
+      );
+    }
+
+    if (elementType === 'Select') {
+      const fields = basicInfo?.dataFields;
+      const options = fields.map((f) => {
+        return {
+          value: f,
+          label: f
+        };
+      });
+      return (
+        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={[reqRule, patternRule]}>
+          <Select style={{ width: 120 }} options={options} />
         </Form.Item>
       );
     }

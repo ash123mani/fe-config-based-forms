@@ -6,10 +6,10 @@ import './index.css';
 import Required from './required';
 import Patterns from './patterns';
 
-const AddFieldValidations = ({ onConfirm, config }) => {
+const AddFieldValidations = ({ onConfirm, config, elementType }) => {
   const [required, setRequired] = useState({
     value: config.required || false,
-    errorMsg: config.errorMsg
+    errorMsg: config.errorMsg || ''
   });
   const [pattern, setPattern] = useState({
     value: config?.pattern?.value || false,
@@ -86,7 +86,7 @@ const AddFieldValidations = ({ onConfirm, config }) => {
     <form onSubmit={handleConfirm} className="validations-form">
       <Space direction="vertical" className="validations">
         {renderRequired()}
-        {renderPattern()}
+        {elementType !== 'Select' && renderPattern()}
       </Space>
       <Button type="primary" onClick={handleConfirm}>
         Confirm
@@ -99,7 +99,8 @@ AddFieldValidations.propTypes = {
   onConfirm() {},
   isEditing: bool,
   config: object,
-  type: string
+  type: string,
+  elementType: string.isRequired
 };
 
 AddFieldValidations.defaultProps = {

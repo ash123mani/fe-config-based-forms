@@ -1,14 +1,22 @@
 import { useState, useEffect } from 'react';
 import { Input, Button, Space } from 'antd';
-import { bool, object } from 'prop-types';
+import { bool, object, string } from 'prop-types';
 
 import SelectInputs from './select-inputs';
 import { toCamelCase } from '../../../utils';
 
 import './index.css';
 
-const AddFieldName = ({ onChangeFieldTypeClick, onAddField, loading, isEditing, config, onEditValidations }) => {
-  const [name, setName] = useState('');
+const AddFieldName = ({
+  onChangeFieldTypeClick,
+  onAddField,
+  loading,
+  isEditing,
+  config,
+  onEditValidations,
+  elementType
+}) => {
+  const [name, setName] = useState(config?.name || '');
   const [apiIdentifier, setApiIdentifier] = useState(name);
   const [listValues, setListItems] = useState(config?.dataFields || []);
   console.log('config', config);
@@ -50,10 +58,12 @@ const AddFieldName = ({ onChangeFieldTypeClick, onAddField, loading, isEditing, 
           />
         </div>
 
-        <div>
-          <h2>Add Default Values</h2>
-          <SelectInputs handleAddItem={handleAddItem} items={listValues} />
-        </div>
+        {elementType === 'Select' && (
+          <div>
+            <h2>Add Default Values</h2>
+            <SelectInputs handleAddItem={handleAddItem} items={listValues} />
+          </div>
+        )}
       </div>
       <Space align="end" className="field-name-buttons">
         {isEditing ? (
@@ -76,7 +86,8 @@ AddFieldName.propTypes = {
   loading: bool,
   isEditing: bool,
   config: object,
-  onEditValidations() {}
+  onEditValidations() {},
+  elementType: string.isRequired
 };
 
 AddFieldName.defaultProps = {
