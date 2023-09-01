@@ -2,7 +2,7 @@ import { Checkbox, Input, Space, Select } from 'antd';
 import { object } from 'prop-types';
 import { patterns } from '../config';
 
-const Patterns = ({ onChange, onPatternChange, pattern, onErrorChange, config }) => {
+const Patterns = ({ onChange, onPatternChange, pattern, onErrorChange }) => {
   return (
     <Space direction="vertical" style={{ display: 'flex' }} size="middle">
       <Space size="middle">
@@ -11,7 +11,7 @@ const Patterns = ({ onChange, onPatternChange, pattern, onErrorChange, config })
         </Checkbox>
         {pattern.value && (
           <Select
-            defaultValue={config?.pattern?.pattern || ''}
+            defaultValue={pattern?.pattern || ''}
             style={{ width: 120 }}
             placeholder="Enter a pattern"
             onChange={onPatternChange}

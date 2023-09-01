@@ -22,7 +22,7 @@ const Elements = ({ fields }) => {
 
     const patternRule = pattern.value
       ? {
-          pattern: pattern?.pattern && `/${pattern.pattern}/`,
+          type: pattern?.pattern || '',
           message: pattern?.errorMsg
         }
       : {};
@@ -52,7 +52,7 @@ const Elements = ({ fields }) => {
         };
       });
       return (
-        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={[reqRule, patternRule]}>
+        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={[reqRule]}>
           <Select style={{ width: 120 }} options={options} />
         </Form.Item>
       );
