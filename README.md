@@ -27,12 +27,7 @@
 <img width="1512" alt="Screenshot 2023-08-28 at 3 57 14 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/581778ac-e146-4755-bdba-390c86f7da95">
 
 
-
-
-
-
-
 ###### Configure forms and flows
-<img width="1503" alt="Screenshot 2023-08-28 at 5 31 17 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/fc256eeb-286a-4d6d-866b-45f80436c9bf">
 
+<img width="1508" alt="Screenshot 2023-09-01 at 1 35 27 PM" src="https://github.com/ash123mani/fe-config-based-forms/assets/36326714/4ef74371-c009-4170-aa5b-91c88badd426">
 
