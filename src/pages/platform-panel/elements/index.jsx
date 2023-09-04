@@ -25,7 +25,7 @@ const Elements = ({ fields }) => {
           type: pattern?.pattern || '',
           message: pattern?.errorMsg
         }
-      : {};
+      : null;
 
     if (elementType === 'Text') {
       return (

@@ -7,12 +7,16 @@ import omit from 'lodash/omit';
 import FieldTypes from '../add-field-types';
 import AddFieldName from '../add-field-name';
 import AddFieldValidations from '../add-field-validations';
-import { ADD_FIELD, UPDATE_FIELD } from '../../../gql';
+import { ADD_FIELD, UPDATE_FIELD, GET_NODE_FIELDS } from '../../../gql';
 import { screens } from './screens';
 
 const NodesFieldDrwaer = ({ handleClose, open, selectedNode, isEditing, editNodeConfig }) => {
-  const [addNodeField, { loading: loadingAddField }] = useMutation(ADD_FIELD);
-  const [updateNodeField] = useMutation(UPDATE_FIELD);
+  const [addNodeField, { loading: loadingAddField }] = useMutation(ADD_FIELD, {
+    refetchQueries: [GET_NODE_FIELDS]
+  });
+  const [updateNodeField] = useMutation(UPDATE_FIELD, {
+    refetchQueries: [GET_NODE_FIELDS]
+  });
   const [fieldId, setFieldId] = useState(null);
 
   const [screen, setScreen] = useState(screens.INFO);

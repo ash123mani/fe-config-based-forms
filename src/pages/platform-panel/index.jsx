@@ -121,7 +121,6 @@ const PlatformPanel = () => {
 
             <Droppable droppableId="map-nodes">
               {(provided, snap) => {
-                console.log('provided', provided);
                 return (
                   <div className="dnd-area">
                     <div ref={provided.innerRef} {...provided.droppableProps}>

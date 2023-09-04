@@ -65,7 +65,7 @@ const AdminPanel = () => {
 
       <section>
         <div>
-          {!selectedNode ? (
+          {!selectedNode.name ? (
             <h3>Select node to see types for it</h3>
           ) : (
             <div>
