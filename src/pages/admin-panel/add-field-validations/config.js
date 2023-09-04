@@ -5,6 +5,14 @@ export const patterns = {
     {
       label: 'URL',
       value: 'url'
+    },
+    {
+      label: 'Number',
+      value: 'number'
+    },
+    {
+      label: 'String',
+      value: 'string'
     }
   ],
   number: {}

@@ -4,13 +4,7 @@ import { Drawer } from 'antd';
 
 const ConfigDrawer = ({ open, onDrawerClose, nodes }) => {
   const afterOmmited = (nodes?.nodeFields || []).map((field) => {
-    return omit(field, [
-      '__typename',
-      '_id',
-      'basicInfo.__typename',
-      'validations.__typename',
-      'validations.pattern.__typename'
-    ]);
+    return omit(field, ['_id']);
   });
 
   return (

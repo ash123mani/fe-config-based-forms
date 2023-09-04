@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Button, Divider, Space } from 'antd';
+import { Button, Divider } from 'antd';
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
-import { Link } from 'react-router-dom';
 
 import { ADD_NODE, GET_NODES, GET_NODE_FIELDS } from '../../gql';
 
@@ -9,6 +8,7 @@ import AddNodeModal from './add-node-modal';
 import NodesFieldDrawer from './add-fields-drawer';
 import Nodes from './nodes';
 import NodesConfig from './nodes-config';
+import Header from './header';
 import './index.css';
 
 const AdminPanel = () => {
@@ -18,7 +18,7 @@ const AdminPanel = () => {
   const { loading: loadingNodes, error: errorNodes, data: dataNodes = {} } = useQuery(GET_NODES);
   const [getNodeFields, { data: dataNodeFields = {}, loading: loadingNodeField }] = useLazyQuery(GET_NODE_FIELDS);
   const [nodes, setAllNodes] = useState([]);
-  const [selectedNode, setSelectedNode] = useState(null);
+  const [selectedNode, setSelectedNode] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editNodeConfig, setEditNodeConfig] = useState({});
 
@@ -47,7 +47,6 @@ const AdminPanel = () => {
     setEditNodeConfig(field);
   };
 
-  console.log('editNodeConfig', editNodeConfig);
   return (
     <main>
       <AddNodeModal
@@ -58,22 +57,7 @@ const AdminPanel = () => {
         handleCancel={() => setOpenModal(false)}
       />
 
-      <section className="admin-header">
-        <Space size="large">
-          <Button type="dashed">
-            <strong>Admin Panel</strong>
-          </Button>
-          <Link to="/platform">
-            <Button type="lik">Platform</Button>
-          </Link>
-          <Link to="/">
-            <Button type="lik">Home</Button>
-          </Link>
-        </Space>
-        <Button type="primary" onClick={() => setOpenModal(true)}>
-          + Add Node Type
-        </Button>
-      </section>
+      <Header handleAddNode={() => setOpenModal(true)} />
 
       <Divider />
       <Nodes loading={loadingNodes} error={errorNodes} nodes={nodes} handleNodeClick={handleNodeClick} />

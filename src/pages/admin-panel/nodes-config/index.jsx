@@ -33,4 +33,8 @@ NodesConfig.propTypes = {
   onEdit() {}
 };
 
+NodesConfig.defaultProps = {
+  fields: []
+};
+
 export default NodesConfig;
