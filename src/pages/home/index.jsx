@@ -9,7 +9,7 @@ const Home = () => {
           <Button type="link">Admin</Button>
         </Link>
         <Link to="/platform">
-          <Button type="lik">Platform</Button>
+          <Button type="lik">Platfrom</Button>
         </Link>
       </Space>
     </div>

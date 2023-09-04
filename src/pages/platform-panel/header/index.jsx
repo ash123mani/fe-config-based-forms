@@ -5,11 +5,11 @@ const Header = ({ onConfigClick }) => {
   return (
     <Space size="large">
       <Button type="dashed">
-        <strong>Platform Panel</strong>
+        <strong>Admin Panel</strong>
       </Button>
 
-      <Link to="/admin">
-        <Button type="lik">Admin</Button>
+      <Link to="/platform">
+        <Button type="lik">Platform</Button>
       </Link>
 
       <Link to="/">

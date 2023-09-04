@@ -6,10 +6,10 @@ const Header = ({ handleAddNode }) => {
     <nav className="admin-header">
       <Space size="large">
         <Button type="dashed">
-          <strong>Admin Panel</strong>
+          <strong>Platform Panel</strong>
         </Button>
-        <Link to="/platform">
-          <Button type="lik">Platform</Button>
+        <Link to="/admin">
+          <Button type="lik">Admin</Button>
         </Link>
         <Link to="/">
           <Button type="lik">Home</Button>

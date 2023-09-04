@@ -20,16 +20,20 @@ const Elements = ({ fields }) => {
       message: validations.errorMsg
     };
 
-    const patternRule = pattern.value
-      ? {
-          type: pattern?.pattern || '',
-          message: pattern?.errorMsg
-        }
-      : null;
+    const patternRule = {
+      type: pattern?.pattern || '',
+      message: pattern?.errorMsg
+    };
+
+    let rules = [reqRule];
+
+    if (pattern.value) {
+      rules.push(patternRule);
+    }
 
     if (elementType === 'Text') {
       return (
-        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={[reqRule, patternRule]}>
+        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={rules}>
           <Input placeholder={basicInfo.name} size="large" />
         </Form.Item>
       );
@@ -37,7 +41,7 @@ const Elements = ({ fields }) => {
 
     if (elementType === 'Integer') {
       return (
-        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={[reqRule, patternRule]}>
+        <Form.Item label={basicInfo.name} name={basicInfo.apiIdentifier} rules={rules}>
           <InputNumber placeholder={basicInfo.name} size="large" />
         </Form.Item>
       );
